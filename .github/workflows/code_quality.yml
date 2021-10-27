@@ -1,0 +1,84 @@
+name: Code Quality
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  format:
+    name: Rustfmt
+    runs-on: [ "self-hosted", "linux", "x64" ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      # (maybe temp) workaround to save a lot of time
+      - run: mkdir -p ./web/dist
+      - run: touch ./web/dist/.gitkeep
+
+      - name: Install minimal stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          components: rustfmt
+          override: true
+
+      - name: Run rustfmt check
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: "--quiet --all"
+
+  clippy:
+    name: Clippy
+    runs-on: [ "self-hosted", "linux", "x64" ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      # (maybe temp) workaround to save a lot of time
+      - run: mkdir -p ./web/dist
+      - run: touch ./web/dist/.gitkeep
+
+      - name: Install minimal nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          components: clippy
+          override: true
+
+      - name: Run clippy
+        uses: actions-rs/clippy-check@v1
+        # unable to successfully finish this action because of:
+        # https://github.com/actions-rs/clippy-check#limitations
+        continue-on-error: true
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: "--quiet --all-features"
+
+  check:
+    name: Check
+    runs-on: [ "self-hosted", "linux", "x64" ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      # (maybe temp) workaround to save a lot of time
+      - run: mkdir -p ./web/dist
+      - run: touch ./web/dist/.gitkeep
+
+      - name: Install minimal nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+
+      - name: Run cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: "--quiet"

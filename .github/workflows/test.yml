@@ -1,0 +1,51 @@
+name: Test
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Test
+    runs-on: [ "self-hosted", "linux", "x64" ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      - name: Install minimal stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - uses: actions/setup-node@v2
+        if: ${{ !env.ACT }}
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: ./package-lock.json
+
+      - name: Install node dependencies
+        run: npm ci --quiet
+
+      - name: Build web resources
+        run: npm run build:prod
+
+      - uses: actions/cache@v2
+        if: ${{ !env.ACT }}
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Run cargo tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: "--quiet"

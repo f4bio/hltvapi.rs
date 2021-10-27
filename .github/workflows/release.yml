@@ -1,0 +1,83 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    name: Release
+    runs-on: [ "self-hosted", "linux", "x64" ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      - name: Install minimal stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Get name from Cargo.toml
+        id: package_name
+        uses: SebRollen/toml-action@v1.0.0
+        with:
+          file: "Cargo.toml"
+          field: "package.name"
+
+      - name: Get version from Cargo.toml
+        id: package_version
+        uses: SebRollen/toml-action@v1.0.0
+        with:
+          file: "Cargo.toml"
+          field: "package.version"
+
+      - name: Remove Same Release
+        uses: author/action-rollback@stable
+        continue-on-error: true
+        with:
+          tag: ${{ steps.package_version.outputs.value }}
+
+      - uses: actions/setup-node@v2
+        if: ${{ !env.ACT }}
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: ./package-lock.json
+
+      - name: Install node dependencies
+        run: npm ci --quiet
+
+      - uses: actions/cache@v2
+        if: ${{ !env.ACT }}
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build web resources
+        run: npm run build:prod
+
+      - name: Build app
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: "--quiet --release"
+
+      - name: Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body_path: CHANGELOG
+          tag_name: v${{ steps.package_version.outputs.value }}
+          draft: false
+          prerelease: false
+          files: |
+            target/release/${{ steps.package_name.outputs.value }}

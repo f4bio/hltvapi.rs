@@ -1,0 +1,6 @@
+---
+source: src/services/news.rs
+expression: item.unwrap().title
+
+---
+EliGE shines as Liquid hammer NIP in ESL Pro League opener

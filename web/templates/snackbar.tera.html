@@ -1,0 +1,41 @@
+<div class="absolute inset-x-0 bottom-0 w-full">
+  <div x-show="info"
+       x-transition
+       class="snackbar bg-blue text-blue" role="alert">
+    <span class="iconify" data-icon="fa-solid:info-circle"></span>
+    <div>
+      <span class="uppercase tracking-widest font-bold mr-1">info!</span>
+      <span x-text="snackbarText"></span>
+    </div>
+  </div>
+  <div x-show="error"
+       x-transition
+       x-init="setTimeout(() => snackbarOpen = false, 3000)"
+       class="snackbar bg-red text-red" role="alert">
+    <span class="iconify" data-icon="fa-solid:exclamation-triangle"></span>
+    <div>
+      <span class="uppercase tracking-widest font-bold mr-1">danger!</span>
+      <span x-text="snackbarText"></span>
+    </div>
+  </div>
+  <div x-show="success"
+       x-transition
+       x-init="setTimeout(() => snackbarOpen = false, 3000)"
+       class="snackbar bg-green text-green" role="alert">
+    <span class="iconify" data-icon="fa-solid:check"></span>
+    <div>
+      <span class="uppercase tracking-widest font-bold mr-1">duccess!</span>
+      <span x-text="snackbarText"></span>
+    </div>
+  </div>
+  <div x-show="warn"
+       x-transition
+       x-init="setTimeout(() => snackbarOpen = false, 3000)"
+       class="snackbar bg-yellow text-yellow" role="alert">
+    <span class="iconify" data-icon="fa-solid:exclamation-circle"></span>
+    <div>
+      <span class="uppercase tracking-widest font-bold mr-1">warning!</span>
+      <span x-text="snackbarText"></span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="openapi.yaml" type="SwaggerCodegen">
+    <option name="activeConfigurationType" value="FILE" />
+    <option name="configurationPath" value="" />
+    <option name="customJreEnabled" value="false" />
+    <option name="customTemplatesPath" value="" />
+    <option name="enableDebugLogging" value="false" />
+    <option name="generateToPath" value="$PROJECT_DIR$/gen" />
+    <option name="generationParameters">
+      <list />
+    </option>
+    <option name="generatorPath" value="$USER_HOME$/Downloads/openapi-generator-cli-5.2.1.jar" />
+    <option name="jdkPath" value="Default" />
+    <option name="language" value="" />
+    <option name="specificationPath" value="$PROJECT_DIR$/openapi.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

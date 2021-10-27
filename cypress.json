@@ -1,0 +1,12 @@
+{
+  "nodeVersion": "system",
+  "downloadsFolder": "./web/cypress/downloads",
+  "fixturesFolderFolder": "./web/cypress/fixtures",
+  "integrationFolder": "./web/cypress/integration",
+  "pluginsFile": "./web/cypress/plugins/index.js",
+  "supportFile": "./web/cypress/support/index.js",
+  "screenshotsFolder": "./web/cypress/screenshots",
+  "videosFolder": "./web/cypress/videos",
+  "fileServerFolder": "./web",
+  "baseUrl": "http://localhost:8080"
+}

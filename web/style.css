@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main-container {
+  @apply
+  relative
+  m-0
+  p-0
+  leading-normal
+  tracking-normal
+  text-primary
+  sm:h-screen;
+  font-family: "Fira Sans", serif;
+}
+
+.intro-container {
+  /*placeholder*/
+}
+
+.outro-container {
+  @apply
+  text-gray;
+}
+
+.gradient-background {
+  @apply
+  bg-gradient-to-b
+  from-primary
+  to-secondary
+  bg-scroll;
+}
+
+.footer-container {
+  @apply
+  fixed
+  bottom-0
+  p-1
+  z-10
+  w-full
+  max-h-9
+  text-xs
+  text-gray;
+}
+
+.footer-container:hover {
+  @apply
+  bg-gray
+  text-dark
+  shadow-lg
+  transform
+  transition
+  duration-500;
+}
+
+.cards-container {
+  @apply
+  w-full
+  flex-grow
+  flex
+  flex-col
+  items-center
+  sm:flex-row
+  sm:h-full
+  sm:justify-center;
+}
+
+.side-card {
+  @apply
+  bg-gray-light
+  text-dark
+  my-4
+  mx-1
+  p-4
+  rounded-xl
+  shadow-lg
+  text-center
+  w-11/12
+  sm:h-full
+  sm:w-1/4
+  sm:mx-5
+  sm:max-h-96;
+}
+
+.side-card:hover {
+  @apply
+  transform
+  transition
+  duration-500
+  shadow-xl
+  scale-105;
+}
+
+.primary-button {
+  @apply
+  py-3
+  px-14
+  rounded-full
+  bg-primary
+  text-dark
+  tracking-widest
+  transition
+  duration-200;
+}
+
+.primary-button:hover {
+  @apply
+  bg-primary-dark;
+}
+
+.secondary-button {
+  @apply
+  py-3
+  px-14
+  bg-secondary
+  text-light
+  tracking-widest
+  transition
+  duration-200;
+}
+
+.secondary-button:hover {
+  @apply
+  bg-secondary-light;
+}
+
+.snackbar {
+  @apply
+  flex
+  p-4
+  mb-4
+  text-sm
+  rounded-lg
+  mx-auto
+  w-full
+  sm:w-1/3;
+}

@@ -1,0 +1,81 @@
+name: Containerize
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+
+env:
+  image_name: hltvapi
+  registry_prefix: registry.digitalocean.com/f4bio
+
+jobs:
+  docr:
+    name: Build and Publish to DigitalOcean Container Registry
+    runs-on: [ "self-hosted", "linux", "x64" ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      - name: Provide name from Cargo.toml
+        id: package_name
+        uses: SebRollen/toml-action@v1.0.0
+        with:
+          file: "Cargo.toml"
+          field: "package.name"
+
+      - name: Provide version from Cargo.toml
+        id: package_version
+        uses: SebRollen/toml-action@v1.0.0
+        with:
+          file: "Cargo.toml"
+          field: "package.version"
+
+      - name: prepare variables
+        run: |
+          echo "package_name=${{ steps.package_name.outputs.value }}" >> $GITHUB_ENV
+          echo "package_version=${{ steps.package_version.outputs.value }}" >> $GITHUB_ENV
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "current_branch=$(git branch --show-current)" >> $GITHUB_ENV
+
+      - id: variable_test
+        run: echo '::set-output name=SELECTED_COLOR::green'
+
+      - name: print out variables
+        run: |
+          echo "package_name: ${{ env.package_name }}"
+          echo "package_version ${{ env.package_version }}"
+          echo "sha_short ${{ env.sha_short }}"
+          echo "current_branch ${{ env.current_branch }}"
+          echo "variable_test ${{ steps.variable_test.outputs.SELECTED_COLOR }}"
+
+      - name: Build container image
+        run: |
+          docker build --tag ${{ env.image_name }}:${{ env.sha_short }} .
+
+      - name: Tag container images
+        run: |
+          docker tag ${{ env.image_name }}:${{ env.sha_short }} \
+            ${{ env.registry_prefix }}/${{ env.image_name }}:${{ env.package_version }}
+          docker tag ${{ env.image_name }}:${{ env.sha_short }} \
+            ${{ env.registry_prefix }}/${{ env.image_name }}:${{ env.sha_short }}
+          docker tag ${{ env.image_name }}:${{ env.sha_short }} \
+            ${{ env.registry_prefix }}/${{ env.image_name }}:${{ env.current_branch }}
+          docker tag ${{ env.image_name }}:${{ env.sha_short }} \
+            ${{ env.registry_prefix }}/${{ env.image_name }}:latest
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Push images to DigitalOcean Container Registry
+        run: |
+          docker push ${{ env.registry_prefix }}/${{ env.image_name }}:${{ env.package_version }}
+          docker push ${{ env.registry_prefix }}/${{ env.image_name }}:${{ env.sha_short }}
+          docker push ${{ env.registry_prefix }}/${{ env.image_name }}:${{ env.current_branch }}
+          docker push ${{ env.registry_prefix }}/${{ env.image_name }}:latest

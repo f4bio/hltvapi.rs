@@ -1,0 +1,9 @@
+.git
+.gitkeep
+/target
+/.idea
+/static
+*.db
+node_modules
+/web/dist
+.env*

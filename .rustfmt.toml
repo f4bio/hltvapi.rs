@@ -1,0 +1,4 @@
+tab_spaces = 2
+report_todo = "Always"
+report_fixme = "Always"
+reorder_imports = true

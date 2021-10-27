@@ -1,0 +1,77 @@
+### ########### ###
+## test
+### ############
+# TODO: #RUN cargo test --offline
+# TODO: #RUN cargo bench --offline
+
+### ########### ###
+## build web
+### ############
+FROM node:latest
+
+ENV PARCEL_WORKERS=0
+
+WORKDIR /code
+COPY . .
+
+RUN npm install
+RUN npm run build:dev
+
+### ########### ###
+## build rust
+### ############
+FROM ekidd/rust-musl-builder:nightly-2021-02-13
+
+# https://github.com/moby/moby/issues/4032#issuecomment-192327844
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN cargo --version
+
+COPY . .
+COPY --from=0 /code/web/dist/ ./web/dist
+
+RUN cargo build --all-features
+
+### ########### ###
+## build do-agent
+### ############
+FROM golang:1.17
+
+ENV DOCKER_BUILD=1
+
+COPY /tmp/do-agent /code
+WORKDIR /code
+RUN set -x
+RUN make clean build
+
+### ########### ###
+## create image
+### ############
+FROM rust:latest
+
+LABEL org.opencontainers.image.authors="Fabio Tea <iam@f4b.io>"
+LABEL org.opencontainers.image.source="https://github.com/f4bio/hltvapi.rs"
+
+ENV TZ=Etc/UTC
+ENV APP_USER=appuser
+ENV APP_LOG_LEVEL=debug
+
+RUN apt-get --yes update
+RUN apt-get --yes install ca-certificates tzdata bash curl git
+
+RUN cargo install bunyan
+
+# useless?
+RUN addgroup --system appuser
+RUN adduser --system --home /app --shell /bin/bash --ingroup appuser appuser
+
+WORKDIR /app
+COPY --from=1 /home/rust/src/target/x86_64-unknown-linux-musl/debug/hltvapi /app/hltvapi
+COPY --from=2 /code /app/do-agent
+RUN chown -R appuser:appuser /app
+
+USER appuser
+EXPOSE 1337
+
+#ENTRYPOINT [ "/app/hltvapi " ]
+ENTRYPOINT [ "/bin/bash" ]

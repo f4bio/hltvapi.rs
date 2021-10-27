@@ -1,0 +1,245 @@
+{
+  "info": {
+    "_postman_id": "6d040eb8-0acd-4f93-ace9-e4d027642003",
+    "name": "hltvapi",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "get news list",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Get News List\", function () {",
+              "    pm.response.to.have.status(200);",
+              "",
+              "    const contentType = pm.response.headers.get(\"Content-Type\");",
+              "    pm.expect(contentType).to.eql(\"application/javascript; charset=utf-8\");",
+              "",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an(\"array\");",
+              "    pm.expect(jsonData).to.have.lengthOf(10);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:1337/api/news/list",
+          "host": [
+            "localhost"
+          ],
+          "port": "1337",
+          "path": [
+            "api",
+            "news",
+            "list"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get news item",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Get News Item\", function () {",
+              "    pm.response.to.have.status(200);",
+              "",
+              "    const contentType = pm.response.headers.get(\"Content-Type\");",
+              "    pm.expect(contentType).to.eql(\"application/javascript; charset=utf-8\");",
+              "",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.hash).not.to.be.empty;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:1337/api/news/b9eca455-beba-4bb5-8274-4df3e0d80c0c",
+          "host": [
+            "localhost"
+          ],
+          "port": "1337",
+          "path": [
+            "api",
+            "news",
+            "b9eca455-beba-4bb5-8274-4df3e0d80c0c"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get news feed",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Get News Item\", function () {",
+              "    pm.response.to.have.status(200);",
+              "",
+              "    const contentType = pm.response.headers.get(\"Content-Type\");",
+              "    pm.expect(contentType).to.eql(\"application/rss+xml\");",
+              "",
+              "    const textData = pm.response.text();",
+              "    pm.expect(textData).not.to.be.empty;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:1337/api/news/feed.xml",
+          "host": [
+            "localhost"
+          ],
+          "port": "1337",
+          "path": [
+            "api",
+            "news",
+            "feed.xml"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get fixtures list",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Get Fixture List\", function () {",
+              "    pm.response.to.have.status(200);",
+              "",
+              "    const contentType = pm.response.headers.get(\"Content-Type\");",
+              "    pm.expect(contentType).to.eql(\"application/javascript; charset=utf-8\");",
+              "",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an(\"array\");",
+              "    pm.expect(jsonData).to.have.lengthOf(10);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:1337/api/fixture/list",
+          "host": [
+            "localhost"
+          ],
+          "port": "1337",
+          "path": [
+            "api",
+            "fixture",
+            "list"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get fixtures item",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Get Fixture Item\", function () {",
+              "    pm.response.to.have.status(200);",
+              "",
+              "    const contentType = pm.response.headers.get(\"Content-Type\");",
+              "    pm.expect(contentType).to.eql(\"application/javascript; charset=utf-8\");",
+              "",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.hash).not.to.be.empty;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:1337/api/fixture/1957be35-3714-41aa-93b5-0ad59154d538",
+          "host": [
+            "localhost"
+          ],
+          "port": "1337",
+          "path": [
+            "api",
+            "fixture",
+            "1957be35-3714-41aa-93b5-0ad59154d538"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get fixtures calendar",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Get News Item\", function () {",
+              "    pm.response.to.have.status(200);",
+              "",
+              "    const contentType = pm.response.headers.get(\"Content-Type\");",
+              "    pm.expect(contentType).to.eql(\"text/calendar\");",
+              "",
+              "    const textData = pm.response.text();",
+              "    pm.expect(textData).not.to.be.empty;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:1337/api/fixture/calendar.ics",
+          "host": [
+            "localhost"
+          ],
+          "port": "1337",
+          "path": [
+            "api",
+            "fixture",
+            "calendar.ics"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

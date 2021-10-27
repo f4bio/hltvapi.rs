@@ -1,0 +1,106 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:cypress/recommended"
+  ],
+  "globals": {
+    "module": true,
+    "require": true,
+    "process": true,
+    "jest/globals": true,
+    "cypress/globals": true,
+    "__dirname": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "unused-imports",
+    "html",
+    "jest",
+    "cypress"
+  ],
+  "rules": {
+    "max-len": [
+      "warn",
+      {
+        "code": 120
+      }
+    ],
+    "eqeqeq": "warn",
+    "semi-spacing": [
+      "warn",
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "never"
+      }
+    ],
+    "object-curly-spacing": [
+      "warn",
+      "always"
+    ],
+    "comma-dangle": [
+      "warn",
+      "always-multiline"
+    ],
+    "semi": [
+      "warn",
+      "always"
+    ],
+    "quotes": [
+      "warn",
+      "double"
+    ],
+    "no-multiple-empty-lines": [
+      "warn",
+      {
+        "max": 1,
+        "maxBOF": 0,
+        "maxEOF": 1
+      }
+    ],
+    "no-console": "warn",
+    "no-debugger": "warn",
+    "no-implicit-globals": "warn",
+    "no-global-assign": "warn",
+    "indent": [
+      "warn",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "import/no-unresolved": [
+      "warn",
+      {
+        "ignore": [
+          "^hltvapi"
+        ]
+      }
+    ],
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      - name: Provide name from Cargo.toml
+        id: package_name
+        uses: SebRollen/toml-action@v1.0.0
+        with:
+          file: "Cargo.toml"
+          field: "package.name"
+
+      - name: Install minimal stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install node dependencies
+        run: npm ci --quiet
+
+      - name: Build web resources
+        run: npm run build:prod
+
+      - uses: actions/cache@v2
+        if: ${{ !env.ACT }}
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build app
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: "--quiet --release"
+
+      - name: Artifact Production
+        uses: actions/upload-artifact@v1
+        with:
+          name: release-build-artifact.zip
+          path: target/release/${{ steps.package_name.outputs.value }}

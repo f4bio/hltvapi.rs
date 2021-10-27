@@ -1,0 +1,102 @@
+{% extends "base.tera.html" %}
+{% block content %}
+<!-- Section Hero -->
+<div class="flex flex-col gradient-background h-full py-10" x-data="clipboard">
+  <!-- Intro -->
+  <div class="flex-none intro-container">
+    <h3 class="text-2xl tracking-widest text-center">Unofficial hltv.org API</h3>
+    <h1 class="mt-8 text-center text-5xl font-bold">A better way to use hltv.org's data</h1>
+  </div>
+
+  <!-- Boxes -->
+  <div class="flex-grow cards-container">
+    <!-- box-1 -->
+    <div class="flex flex-col side-card">
+      <span class="flex-none w-32 h-32 m-auto iconify" data-icon="flat-color-icons:calendar"></span>
+      <h1 class="flex-none mt-5 text-xl font-bold">Fixtures Calendar</h1>
+      <div class="flex-grow text-xs text-gray-dark">
+        <h6 class="text-xs font-bold">Example (GCal):</h6>
+        <ol class="list-decimal list-inside text-xs">
+          <li>
+            go to <a href="https://calendar.google.com/calendar/u/0/r/settings/addbyurl" target="_blank">
+            &quot;add calendar by url&quot;</a>
+          </li>
+          <li>
+            put in the link below
+          </li>
+        </ol>
+      </div>
+      <div class="flex flex-row border border-secondary border-opacity-50" x-data="{}">
+        <label class="hidden" for="calendarIcsInput">Calendar ICS URL</label>
+        <textarea
+          @click="$el.select()"
+          id="calendarIcsInput"
+          class="overflow-hidden resize-none text-center font-semibold border-0 w-full"
+          readonly>@{{ app_base_url }}{{ calendar_ics_path }}</textarea>
+
+        <button type="button"
+                @click="copy('@{{ app_base_url }}{{ calendar_ics_path }}')"
+                title="Copy URL to Clipboard">
+          <span class="iconify w-8 h-8" data-icon="fluent:clipboard-link-20-regular"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- box-2 -->
+    <div class="flex flex-col side-card">
+      <span class="flex-none w-32 h-32 m-auto iconify" data-icon="flat-color-icons:multiple-inputs"></span>
+      <h1 class="flex-none mt-5 text-xl font-bold">API Docs</h1>
+      <div class="flex-grow text-xs text-gray-dark">
+        Nunc consequat interdum varius sit amet mattis vulputate enim nulla. Risus feugiat.
+      </div>
+      <a class="flex-none secondary-button" href="/docs">
+        Check out
+      </a>
+    </div>
+
+    <!-- box-3 -->
+    <div class="flex flex-col side-card">
+      <span class="flex-none w-32 h-32 m-auto iconify" data-icon="flat-color-icons:news"></span>
+      <h1 class="flex-none mt-5 text-xl font-bold">News Feed</h1>
+      <div class="flex-grow text-xs text-gray-dark">
+        <h6 class="text-xs font-bold text-gray-600">Example (Feedly):</h6>
+        <ol class="list-decimal list-inside text-xs text-gray-600">
+          <li>
+            go to <a href="https://feedly.com/i/discover" target="_blank">&quot;discover&quot;</a>
+          </li>
+          <li>
+            put in the link below
+          </li>
+        </ol>
+      </div>
+      <div class="flex flex-row border border-secondary border-opacity-50">
+        <label class="hidden" for="newsXmlInput">News XML URL</label>
+        <textarea
+          @click="$el.select()"
+          id="newsXmlInput"
+          class="overflow-hidden resize-none text-center font-semibold border-0 w-full"
+          readonly>@{{ app_base_url }}{{ news_xml_path }}</textarea>
+
+        <button type="button"
+                @click="copy('@{{ app_base_url }}{{ news_xml_path }}');"
+                title="Copy URL to Clipboard">
+          <span class="iconify w-8 h-8"
+                data-icon="fluent:clipboard-link-20-regular"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-none outro-container">
+    <h4 class="text-center font-thin text-xl">
+      <!-- ignored by posthtml -->
+      @{{ wisdom }}
+    </h4>
+    <h5 class="text-center font-thin text-xs">
+      v{{ app_build_version }} running since {{ app_build_datetime }}
+    </h5>
+  </div>
+  {% include "snackbar.tera.html" %}
+
+</div>
+{% endblock content %}

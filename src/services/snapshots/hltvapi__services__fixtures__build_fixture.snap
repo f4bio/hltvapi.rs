@@ -1,0 +1,18 @@
+---
+source: src/services/fixtures.rs
+expression: new_fixture
+
+---
+id: ~
+name: ESL Pro League Season 14
+link: /matches/2350366/furia-vs-teamone-esl-pro-league-season-14
+team1: FURIA
+team2: TeamOne
+start_time: "2021-09-02T11:30:00"
+rating: 1
+meta: bo3
+analytics: /betting/analytics/2350366/furia-vs-teamone-esl-pro-league-season-14
+top_tier: true
+hash: ~
+created_at: ~
+updated_at: ~

@@ -1,0 +1,185 @@
+openapi: 3.1.0
+info:
+  title: Unofficial hltv.org API
+  version: 0.0.2
+  description: |
+    The pathway trembles ionic cannon like an evil astronaut.
+    Peritus caesium unus convertams exsul est.
+    The planet is nosily extraterrestrial.
+    Jolly roger, mighty cockroach. you won't fire the brig.
+    Salsa verde soup is just not the same without flower and juicy salted walnuts.
+  x-logo:
+    url: "logo.png"
+    backgroundColor: "#FFFFFF"
+    altText: "hltvapi logo"
+servers:
+  - url: https://hltvapi.f4b.io/api
+    description: Production server (uses live data)
+  - url: http://localhost:1337/api
+    description: Local dev server (uses test data)
+externalDocs:
+  url: /docs
+  description: Find more info here
+paths:
+  /fixture/list:
+    get:
+      summary: "List fixtures"
+      description: |
+        Get a list of current fixtures
+      operationId: "FixtureList"
+      responses:
+        200:
+          $ref: "#/components/responses/FixtureList"
+  /fixture/{uuid}:
+    get:
+      summary: "Get fixture"
+      description: |
+        Get specific fixture item
+      operationId: "FixturesGet"
+      parameters:
+        - $ref: "#/components/parameters/FixturesUUID"
+      responses:
+        200:
+          $ref: "#/components/responses/FixtureItem"
+  /fixture/calendar.ics:
+    get:
+      summary: "Get fixture calendar"
+      description: |
+        An importable calendar file in .ics format
+      operationId: "FixturesCalendar"
+      responses:
+        200:
+          description: "an ics file containing fixtures as events"
+  /news/list:
+    get:
+      summary: "List news"
+      description: |
+        Get a list of current news
+      operationId: "NewsList"
+      responses:
+        200:
+          $ref: "#/components/responses/NewsList"
+  /news/{uuid}:
+    get:
+      summary: "Get news"
+      description: |
+        Get specific news item
+      operationId: "NewsGet"
+      parameters:
+        - $ref: "#/components/parameters/NewsUUID"
+      responses:
+        200:
+          $ref: "#/components/responses/NewsItem"
+  /news/feed.xml:
+    get:
+      summary: "Get news feed"
+      description: |
+        Get an importable rss feed file
+      operationId: "NewsFeed"
+      responses:
+        200:
+          description: "an xml file containing news feed"
+components:
+  responses:
+    FixtureList:
+      description: A JSON array of fixtures names
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Fixture"
+    FixtureItem:
+      description: A fixture item
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Fixture"
+    NewsList:
+      description: A list of news items
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/News"
+    NewsItem:
+      description: A news item
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/News"
+  schemas:
+    Fixture:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        link:
+          type: string
+        team1:
+          type: string
+        team2:
+          type: string
+        start_time:
+          type: string
+        rating:
+          type: integer
+        meta:
+          type: string
+        analytics:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+    News:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        link:
+          type: string
+        pub_date:
+          type: string
+        summary:
+          type: string
+        content:
+          type: string
+        description:
+          type: string
+        author:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+  parameters:
+    FixturesUUID:
+      name: fixtures_uuid
+      in: query
+      required: true
+      description: |
+        The fixtures_uuid is the identifier of a fixture.
+        You will receive a fixture item whose id matches the one you provide.
+      schema:
+        type: string
+        format: uuid
+        example: 41190cee-5231-4dcc-8167-ebf798b55ce3
+    NewsUUID:
+      name: news_uuid
+      in: query
+      required: true
+      description: |
+        The news_uuid is the identifier of a news.
+        You will received a news item whose id matches the one you provide.
+      schema:
+        type: string
+        format: uuid
+        example: 41190cee-5231-4dcc-8167-ebf798b55ce3

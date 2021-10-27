@@ -1,0 +1,98 @@
+name: Coverage
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+
+jobs:
+  tarpaulin:
+    name: Code Coverage with Tarpaulin
+    runs-on: [ "self-hosted", "linux", "x64" ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      # (maybe temp) workaround to save a lot of time
+      - run: mkdir -p ./web/dist
+      - run: touch ./web/dist/.gitkeep
+
+      - name: Install minimal stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Clean up
+        uses: actions-rs/cargo@v1
+        with:
+          command: clean
+
+      - name: Run cargo-tarpaulin
+        uses: actions-rs/tarpaulin@v0.1
+        id: tarpaulin
+        with:
+          version: 0.18.0
+          args: "-- --test-threads 1"
+
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: cobertura.xml
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage-report.zip
+          path: cobertura.xml
+
+  grcov:
+    name: Code Coverage with grcov
+    runs-on: [ "self-hosted", "linux", "x64" ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      # (maybe temp) workaround to save a lot of time
+      - run: mkdir -p ./web/dist
+      - run: touch ./web/dist/.gitkeep
+
+      - name: Install minimal stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+
+      - name: Clean up
+        uses: actions-rs/cargo@v1
+        with:
+          command: clean
+
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all-features --no-fail-fast --quiet
+        env:
+          CARGO_INCREMENTAL: '0'
+          RUSTFLAGS: '-Zprofile -Cinline-threshold=0 -Zpanic_abort_tests'
+          RUSTDOCFLAGS: '-Zprofile -Cinline-threshold=0 -Zpanic_abort_tests'
+
+      - name: Run grcov
+        id: grcov
+        uses: actions-rs/grcov@v0.1
+
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ${{ steps.grcov.outputs.report }}
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage-report.zip
+          path: ${{ steps.grcov.outputs.report }}

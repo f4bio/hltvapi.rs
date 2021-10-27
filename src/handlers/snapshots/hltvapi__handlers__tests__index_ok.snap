@@ -1,0 +1,6 @@
+---
+source: src/handlers/mod.rs
+expression: resp.status().as_str()
+
+---
+"200"
