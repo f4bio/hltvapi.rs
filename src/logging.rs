@@ -1,7 +1,7 @@
 use tracing::{subscriber::set_global_default, Subscriber};
 use tracing_bunyan_formatter::{BunyanFormattingLayer, JsonStorageLayer};
 use tracing_log::LogTracer;
-use tracing_subscriber::{layer::SubscriberExt, EnvFilter, Registry};
+use tracing_subscriber::{filter::EnvFilter, layer::SubscriberExt, Registry};
 
 /// Compose multiple layers into a `tracing`'s subscriber.
 ///

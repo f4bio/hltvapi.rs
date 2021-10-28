@@ -8,7 +8,7 @@ on:
 jobs:
   format:
     name: Rustfmt
-    runs-on: [ "self-hosted", "linux", "x64" ]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
 
   clippy:
     name: Clippy
-    runs-on: [ "self-hosted", "linux", "x64" ]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
@@ -61,7 +61,7 @@ jobs:
 
   check:
     name: Check
-    runs-on: [ "self-hosted", "linux", "x64" ]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
