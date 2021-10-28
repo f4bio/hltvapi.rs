@@ -7,7 +7,11 @@
 ### ########### ###
 ## build web
 ### ############
-FROM node:latest
+FROM node:16
+
+# https://github.com/webpack/webpack/issues/14532
+# temp workaround:
+#ENV NODE_OPTIONS "--openssl-legacy-provider"
 
 WORKDIR /code
 COPY . .
