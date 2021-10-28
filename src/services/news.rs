@@ -10,7 +10,7 @@ use std::thread;
 use chrono::{NaiveDateTime, TimeZone, Utc};
 use itconfig::get_env_or_default;
 use rss::extension::syndication::SyndicationExtension;
-use rss::{Channel, ChannelBuilder, Enclosure, EnclosureBuilder, Guid, Image, Item};
+use rss::{Channel, ChannelBuilder, Enclosure, EnclosureBuilder, Guid, Image, ImageBuilder, Item};
 use scraper::{ElementRef, Html, Selector};
 use tracing::{debug, error, info};
 
@@ -134,20 +134,16 @@ fn update_news_feed() {
   info!("updating news feed...");
   let app_base_url: String = get_env_or_default("PUBLIC_BASE_URL", "https://hltvapi.f4b.io");
 
+  let image: Image = ImageBuilder::default()
+    .url("https://hltvapi.f4b.io/logo.png")
+    .title("hltvapi logo")
+    .build();
   let mut channel: Channel = ChannelBuilder::default()
     .title("Unofficial hltv.org News")
-    .link(BASE_URL)
+    .link(&app_base_url)
     .description("An unofficial hltv.org RSS news-feed.")
-    .image(Image {
-      url: app_base_url.to_string(),
-      title: "".to_string(),
-      link: "".to_string(),
-      width: None,
-      height: None,
-      description: None,
-    })
-    .build()
-    .unwrap();
+    .image(image)
+    .build();
   let all_news = News::all().unwrap();
   let mut news_items: Vec<Item> = vec![];
 
@@ -160,13 +156,12 @@ fn update_news_feed() {
     let enclosure: Enclosure = EnclosureBuilder::default()
       .mime_type(mime::IMAGE_JPEG.to_string())
       .url(ne.image.unwrap())
-      .build()
-      .unwrap();
+      .build();
 
     // push items into channel
     news_items.push(Item {
       title: Some(ne.title),
-      link: Some(format!("{}{}", BASE_URL, ne.link)),
+      link: Some(format!("{}{}", &app_base_url, ne.link)),
       description: ne.description,
       author: ne.author,
       categories: vec![],

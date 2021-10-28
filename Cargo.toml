@@ -9,21 +9,21 @@ license-file = "LICENSE"
 homepage = "https://hltvapi.f4b.io"
 
 [dependencies]
-actix-rt = "2.2.0"
-actix-http = "3.0.0-beta.10"
-actix-web = "4.0.0-beta.9"
-actix-files = "0.6.0-beta.7"
+actix-rt = "2.3.0"
+actix-http = "3.0.0-beta.11"
+actix-web = "4.0.0-beta.10"
+actix-files = "0.6.0-beta.8"
 serde = "1.0.130"
 serde_json = "1.0.68"
 chrono = { version = "0.4.19", features = ["serde"] }
 uuid = { version = "0.8.2", features = ["serde", "v4"] }
 diesel = { version = "1.4.8", features = ["sqlite", "r2d2", "chrono", "uuidv07"] }
-libsqlite3-sys = { version = ">=0.8.0, <0.23.0", optional = true, features = ["bundled"] }
+libsqlite3-sys = { version = "0.23.1", optional = true, features = ["bundled"] }
 diesel_migrations = "1.4.0"
 r2d2 = "0.8.9"
 scraper = "0.12.0"
 dotenv = "0.15.0"
-reqwest = { version = "0.11.5", features = ["json", "blocking"] }
+reqwest = { version = "0.11.6", features = ["json", "blocking"] }
 tokio = { version = "1.12.0", features = ["full"] }
 itconfig = "1.1.1"
 clokwerk = "0.4.0-rc1"
@@ -31,18 +31,17 @@ lazy_static = "1.4.0"
 mime = "0.3.16"
 tracing = "0.1.29"
 tracing-subscriber = "0.2.25"
-tracing-actix-web = "0.4.0-beta.13"
 tracing-bunyan-formatter = "0.2.6"
 tracing-log = "0.1.2"
-tracing-appender = "0.1.2"
-rss = "1.10.0"
-openssl = "0.10.36"
+rss = "2.0.0"
+openssl = "0.10.37"
 openssl-probe = "0.1.4"
 include_dir = "0.6.2"
-tera = "1.12.1"
+tera = "1.13.0"
 icalendar = "0.10.0"
 rand = "0.8.4"
 mime_guess = "2.0.3"
+tracing-actix-web = "0.5.0-beta.1"
 
 [dev-dependencies]
 insta = "1.8.0"

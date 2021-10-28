@@ -29,8 +29,10 @@ async fn main() -> io::Result<()> {
   dotenv::dotenv().ok();
   debug!("environment variables initialized!");
 
-  logging::initialize().ok();
-  debug!("logging initialized!");
+  let app_log: String = get_env_or_default("APP_LOG_LEVEL", "warn");
+  let subscriber = logging::get_subscriber("hltvapi".into(), app_log);
+  logging::init_subscriber(subscriber);
+  debug!("core-logging initialized!");
 
   // create db with connection pool
   database::initialize().ok();

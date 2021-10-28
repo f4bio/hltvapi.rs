@@ -1,21 +1,31 @@
 {
-  "extends": "stylelint-config-recommended",
-  "rules": {
-    "at-rule-no-unknown": [
-      true,
-      {
-        "ignoreAtRules": [
-          "tailwind",
-          "apply",
-          "variants",
-          "responsive",
-          "screen",
-          "use"
-        ]
+  "extends": [
+    "stylelint-config-recommended"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "./web/**/*.css"
+      ],
+      "customSyntax": "postcss-html",
+      "rules": {
+        "at-rule-no-unknown": [
+          true,
+          {
+            "ignoreAtRules": [
+              "tailwind",
+              "apply",
+              "variants",
+              "responsive",
+              "screen",
+              "use"
+            ]
+          }
+        ],
+        "declaration-block-trailing-semicolon": null,
+        "no-descending-specificity": null,
+        "no-invalid-position-at-import-rule": null
       }
-    ],
-    "declaration-block-trailing-semicolon": null,
-    "no-descending-specificity": null,
-    "no-invalid-position-at-import-rule": null
-  }
+    }
+  ]
 }

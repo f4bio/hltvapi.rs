@@ -1,35 +1,34 @@
-use itconfig::get_env_or_default;
-use tracing::debug;
-use tracing::subscriber::set_global_default;
+use tracing::{subscriber::set_global_default, Subscriber};
 use tracing_bunyan_formatter::{BunyanFormattingLayer, JsonStorageLayer};
 use tracing_log::LogTracer;
-use tracing_subscriber::layer::SubscriberExt;
-use tracing_subscriber::{EnvFilter, Registry};
+use tracing_subscriber::{layer::SubscriberExt, EnvFilter, Registry};
 
-use crate::errors::ApiError;
+/// Compose multiple layers into a `tracing`'s subscriber.
+///
+/// # Implementation Notes
+///
+/// We are using `impl Subscriber` as return type to avoid having to
+/// spell out the actual type of the returned subscriber, which is
+/// indeed quite complex.
+/// We need to explicitly call out that the returned subscriber is
+/// `Send` and `Sync` to make it possible to pass it to `init_subscriber`
+/// later on.
+pub fn get_subscriber(name: String, level: String) -> impl Subscriber + Send + Sync {
+  let env_filter = EnvFilter::try_from_default_env()
+    .unwrap_or_else(|_| EnvFilter::new(format!("warn,{}={}", name, level)));
+  let formatting_layer = BunyanFormattingLayer::new(name, std::io::stdout);
+  Registry::default()
+    .with(env_filter)
+    .with(JsonStorageLayer)
+    .with(formatting_layer)
+}
 
 /// Register a subscriber as global default to process span data.
 ///
 /// It should only be called once!
-pub fn initialize() -> Result<(), ApiError> {
-  let app_name: String = get_env_or_default("APP_NAME", "hltvapi");
-  debug!("app name: '{}'", app_name);
-
-  let app_log: String = get_env_or_default("APP_LOG_LEVEL", "info");
-  debug!("app log: '{}'", app_log);
-
-  let log_level: String = format!("warn,{}={}", app_name, app_log);
-  debug!("log level: '{}'", log_level);
-
-  let formatting_layer = BunyanFormattingLayer::new(app_name, std::io::stdout);
-  let subscriber = Registry::default()
-    .with(EnvFilter::new(log_level))
-    .with(JsonStorageLayer)
-    .with(formatting_layer);
-
-  LogTracer::init().expect("Unable to setup log tracer!");
-
-  Ok(set_global_default(subscriber).unwrap())
+pub fn init_subscriber(subscriber: impl Subscriber + Send + Sync) {
+  LogTracer::init().expect("Failed to set logger");
+  set_global_default(subscriber).expect("Failed to set subscriber");
 }
 
 #[cfg(test)]
@@ -39,6 +38,8 @@ mod tests {
 
   #[test]
   fn test_initialize() {
-    assert_eq!(initialize().unwrap(), ());
+    let subscriber = get_subscriber("test_module".into(), "debug".into());
+
+    assert_eq!(init_subscriber(subscriber), ());
   }
 }
