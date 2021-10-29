@@ -2,9 +2,9 @@
 
 [package]
 name = "hltvapi"
-version = "0.6.5"
+version = "0.6.6"
 authors = ["Fabio Tea <iam@f4b.io>"]
-edition = "2018"
+edition = "2021"
 license-file = "LICENSE"
 homepage = "https://hltvapi.f4b.io"
 

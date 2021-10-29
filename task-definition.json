@@ -1,253 +1,164 @@
 {
-    "family": "",
-    "taskRoleArn": "",
-    "executionRoleArn": "",
-    "networkMode": "awsvpc",
-    "containerDefinitions": [
-        {
-            "name": "",
-            "image": "",
-            "repositoryCredentials": {
-                "credentialsParameter": ""
-            },
-            "cpu": 0,
-            "memory": 0,
-            "memoryReservation": 0,
-            "links": [
-                ""
-            ],
-            "portMappings": [
-                {
-                    "containerPort": 0,
-                    "hostPort": 0,
-                    "protocol": "tcp"
-                }
-            ],
-            "essential": true,
-            "entryPoint": [
-                ""
-            ],
-            "command": [
-                ""
-            ],
-            "environment": [
-                {
-                    "name": "",
-                    "value": ""
-                }
-            ],
-            "environmentFiles": [
-                {
-                    "value": "",
-                    "type": "s3"
-                }
-            ],
-            "mountPoints": [
-                {
-                    "sourceVolume": "",
-                    "containerPath": "",
-                    "readOnly": true
-                }
-            ],
-            "volumesFrom": [
-                {
-                    "sourceContainer": "",
-                    "readOnly": true
-                }
-            ],
-            "linuxParameters": {
-                "capabilities": {
-                    "add": [
-                        ""
-                    ],
-                    "drop": [
-                        ""
-                    ]
-                },
-                "devices": [
-                    {
-                        "hostPath": "",
-                        "containerPath": "",
-                        "permissions": [
-                            "read"
-                        ]
-                    }
-                ],
-                "initProcessEnabled": true,
-                "sharedMemorySize": 0,
-                "tmpfs": [
-                    {
-                        "containerPath": "",
-                        "size": 0,
-                        "mountOptions": [
-                            ""
-                        ]
-                    }
-                ],
-                "maxSwap": 0,
-                "swappiness": 0
-            },
-            "secrets": [
-                {
-                    "name": "",
-                    "valueFrom": ""
-                }
-            ],
-            "dependsOn": [
-                {
-                    "containerName": "",
-                    "condition": "COMPLETE"
-                }
-            ],
-            "startTimeout": 0,
-            "stopTimeout": 0,
-            "hostname": "",
-            "user": "",
-            "workingDirectory": "",
-            "disableNetworking": true,
-            "privileged": true,
-            "readonlyRootFilesystem": true,
-            "dnsServers": [
-                ""
-            ],
-            "dnsSearchDomains": [
-                ""
-            ],
-            "extraHosts": [
-                {
-                    "hostname": "",
-                    "ipAddress": ""
-                }
-            ],
-            "dockerSecurityOptions": [
-                ""
-            ],
-            "interactive": true,
-            "pseudoTerminal": true,
-            "dockerLabels": {
-                "KeyName": ""
-            },
-            "ulimits": [
-                {
-                    "name": "sigpending",
-                    "softLimit": 0,
-                    "hardLimit": 0
-                }
-            ],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "KeyName": ""
-                },
-                "secretOptions": [
-                    {
-                        "name": "",
-                        "valueFrom": ""
-                    }
-                ]
-            },
-            "healthCheck": {
-                "command": [
-                    ""
-                ],
-                "interval": 0,
-                "timeout": 0,
-                "retries": 0,
-                "startPeriod": 0
-            },
-            "systemControls": [
-                {
-                    "namespace": "",
-                    "value": ""
-                }
-            ],
-            "resourceRequirements": [
-                {
-                    "value": "",
-                    "type": "InferenceAccelerator"
-                }
-            ],
-            "firelensConfiguration": {
-                "type": "fluentd",
-                "options": {
-                    "KeyName": ""
-                }
-            }
+  "ipcMode": null,
+  "executionRoleArn": "arn:aws:iam::220695116542:role/hltvapi-test-hltvapi-ExecutionRole-DO096DCU2MBW",
+  "containerDefinitions": [
+    {
+      "dnsSearchDomains": [],
+      "environmentFiles": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "secretOptions": [],
+        "options": {
+          "awslogs-group": "/copilot/hltvapi-test-hltvapi",
+          "awslogs-region": "eu-central-1",
+          "awslogs-stream-prefix": "copilot"
         }
-    ],
-    "volumes": [
+      },
+      "entryPoint": [],
+      "portMappings": [
         {
-            "name": "",
-            "host": {
-                "sourcePath": ""
-            },
-            "dockerVolumeConfiguration": {
-                "scope": "task",
-                "autoprovision": true,
-                "driver": "",
-                "driverOpts": {
-                    "KeyName": ""
-                },
-                "labels": {
-                    "KeyName": ""
-                }
-            },
-            "efsVolumeConfiguration": {
-                "fileSystemId": "",
-                "rootDirectory": "",
-                "transitEncryption": "DISABLED",
-                "transitEncryptionPort": 0,
-                "authorizationConfig": {
-                    "accessPointId": "",
-                    "iam": "DISABLED"
-                }
-            },
-            "fsxWindowsFileServerVolumeConfiguration": {
-                "fileSystemId": "",
-                "rootDirectory": "",
-                "authorizationConfig": {
-                    "credentialsParameter": "",
-                    "domain": ""
-                }
-            }
+          "hostPort": 1337,
+          "protocol": "tcp",
+          "containerPort": 1337
         }
-    ],
-    "placementConstraints": [
+      ],
+      "command": [],
+      "linuxParameters": null,
+      "cpu": 0,
+      "environment": [
         {
-            "type": "memberOf",
-            "expression": ""
-        }
-    ],
-    "requiresCompatibilities": [
-        "EC2"
-    ],
-    "cpu": "",
-    "memory": "",
-    "tags": [
+          "name": "COPILOT_APPLICATION_NAME",
+          "value": "hltvapi"
+        },
         {
-            "key": "",
-            "value": ""
-        }
-    ],
-    "pidMode": "host",
-    "ipcMode": "task",
-    "proxyConfiguration": {
-        "type": "APPMESH",
-        "containerName": "",
-        "properties": [
-            {
-                "name": "",
-                "value": ""
-            }
-        ]
-    },
-    "inferenceAccelerators": [
+          "name": "COPILOT_ENVIRONMENT_NAME",
+          "value": "test"
+        },
         {
-            "deviceName": "",
-            "deviceType": ""
+          "name": "COPILOT_LB_DNS",
+          "value": "hltva-Publi-1VL9CYPMH3PI-2025881280.eu-central-1.elb.amazonaws.com"
+        },
+        {
+          "name": "COPILOT_SERVICE_DISCOVERY_ENDPOINT",
+          "value": "test.hltvapi.local"
+        },
+        {
+          "name": "COPILOT_SERVICE_NAME",
+          "value": "hltvapi"
         }
-    ],
-    "ephemeralStorage": {
-        "sizeInGiB": 0
+      ],
+      "resourceRequirements": null,
+      "ulimits": [],
+      "dnsServers": [],
+      "mountPoints": [],
+      "workingDirectory": null,
+      "secrets": [],
+      "dockerSecurityOptions": [],
+      "memory": null,
+      "memoryReservation": null,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "220695116542.dkr.ecr.eu-central-1.amazonaws.com/hltvapi/hltvapi@sha256:3189bd97e765e0bfe5b7e97acb64ea904ca3f717790933ede293660111d4611e",
+      "startTimeout": null,
+      "firelensConfiguration": null,
+      "dependsOn": null,
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": true,
+      "links": [],
+      "hostname": null,
+      "extraHosts": [],
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": {},
+      "systemControls": [],
+      "privileged": null,
+      "name": "hltvapi"
     }
+  ],
+  "placementConstraints": [],
+  "memory": "512",
+  "taskRoleArn": "arn:aws:iam::220695116542:role/hltvapi-test-hltvapi-TaskRole-15N5QY3BBNH9I",
+  "compatibilities": [
+    "EC2",
+    "FARGATE"
+  ],
+  "taskDefinitionArn": "arn:aws:ecs:eu-central-1:220695116542:task-definition/hltvapi-test-hltvapi:1",
+  "family": "hltvapi-test-hltvapi",
+  "requiresAttributes": [
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.task-eni"
+    }
+  ],
+  "pidMode": null,
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "runtimePlatform": null,
+  "cpu": "256",
+  "revision": 1,
+  "status": "ACTIVE",
+  "inferenceAccelerators": null,
+  "proxyConfiguration": null,
+  "volumes": []
 }

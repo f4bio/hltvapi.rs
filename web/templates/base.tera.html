@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Unofficial hltv.org API</title>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <link href="../images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-  <link href="../images/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-  <link href="../images/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-  <link href="../images/favicon.ico" rel="icon" sizes="16x16" type="image/ico"/>
-  <link color="#5bbad5" href="../images/safari-pinned-tab.svg" rel="mask-icon"/>
-  <meta content="#da532c" name="msapplication-TileColor"/>
-  <meta content="#ffffff" name="theme-color"/>
+  <link href="../images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+  <link href="../images/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+  <link href="../images/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+  <link href="../images/favicon.ico" rel="icon" sizes="16x16" type="image/ico" />
+  <link color="#5bbad5" href="../images/safari-pinned-tab.svg" rel="mask-icon" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+  <meta content="#ffffff" name="theme-color" />
 </head>
-<body class="main-container">
-{% block content %}{% endblock content %}
 
-<div class="flex flex-row footer-container">
-  <div class="flex-none flex flex-row justify-start items-center">
-    <span>powered by</span>
-    <a href="https://actix.rs" target="_blank">
-      <img alt="Actix Logo"
-           class="ml-1 h-8 w-8"
-           loading="lazy"
-           src="../images/actix.png"
-           title="Actix"/>
-    </a>
-    <span>+</span>
-    <a href="https://tailwindcss.com/" target="_blank">
-      <img alt="TailwindCSS Logo"
-           class="ml-1 h-8 w-8"
-           loading="lazy"
-           src="../images/tailwindcss.png"
-           title="TailwindCSS"/>
-    </a>
+<body class="main-container">
+  {% block content %}{% endblock content %}
+
+  <div class="flex flex-row footer-container">
+    <div class="flex-none flex flex-row justify-start items-center">
+      <span>powered by</span>
+      <a href="https://actix.rs" target="_blank">
+        <img alt="Actix Logo" class="ml-1 h-8 w-8" loading="lazy" src="../images/actix.png" title="Actix" />
+      </a>
+      <span>+</span>
+      <a href="https://tailwindcss.com/" target="_blank">
+        <img alt="TailwindCSS Logo" class="ml-1 h-8 w-8" loading="lazy" src="../images/tailwindcss.png"
+          title="TailwindCSS" />
+      </a>
+    </div>
+    <div class="flex-grow"></div>
+    <div class="flex-none flex flex-row justify-start items-center">
+      <span>more info at</span>
+      <a href="https://iam.f4b.io" target="_blank">
+        <img alt="Dev's Homepage Logo" class="ml-1 h-8 w-8" loading="lazy" src="../images/dev.png"
+          title="Dev's Homepage" />
+      </a>
+      <span>&</span>
+      <a href="https://github.com/f4bio/hltvapi.rs" target="_blank">
+        <img alt="GitHub Logo" class="ml-1 h-8 w-8" loading="lazy" src="../images/github.png" title="GitHub" />
+      </a>
+    </div>
   </div>
-  <div class="flex-grow"></div>
-  <div class="flex-none flex flex-row justify-start items-center">
-    <a href="https://iam.f4b.io">iam.f4b.io</a>
-    <span>//</span>
-    <a href="https://github.com/f4bio/hltvapi.rs">github</a>
-  </div>
-</div>
 </body>
+
 </html>
