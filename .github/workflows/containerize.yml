@@ -9,7 +9,7 @@ on:
 jobs:
   docr:
     name: Build and Publish to AWS Container Registry
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
