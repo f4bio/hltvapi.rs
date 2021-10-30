@@ -7,7 +7,7 @@
 ### ########### ###
 ## build web
 ### ############
-FROM node:16
+FROM node:17
 
 # https://github.com/webpack/webpack/issues/14532
 # temp workaround:
@@ -16,16 +16,19 @@ FROM node:16
 WORKDIR /code
 COPY . .
 
-RUN npm ci --silent
+RUN npm ci --silent --prefer-offline --no-audit
 RUN npm run build:prod
 
 ### ########### ###
 ## build rust
 ### ############
-FROM ekidd/rust-musl-builder:latest
+#FROM ekidd/rust-musl-builder:stable
+FROM clux/muslrust:nightly
 
 # https://github.com/moby/moby/issues/4032#issuecomment-192327844
 ARG DEBIAN_FRONTEND=noninteractive
+
+RUN cargo --version
 
 COPY . .
 COPY --from=0 /code/web/dist/ ./web/dist
@@ -53,7 +56,7 @@ RUN addgroup --system appuser
 RUN adduser --system --home /app --ingroup appuser appuser
 
 WORKDIR /app
-COPY --from=1 /home/rust/src/target/x86_64-unknown-linux-musl/release/hltvapi /app/hltvapi
+COPY --from=1 /volume/target/x86_64-unknown-linux-musl/release/hltvapi /app/hltvapi
 RUN chown -R appuser:appuser /app
 
 USER appuser
