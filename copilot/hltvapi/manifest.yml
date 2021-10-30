@@ -13,7 +13,7 @@ http:
   path: '/'
   # You can specify a custom health check path. The default is "/".
   # healthcheck: '/'
-  alias: hltvapi.f4b.io
+  #alias: hltvapi.f4b.io
 
 # Configuration for your containers and service.
 image:
