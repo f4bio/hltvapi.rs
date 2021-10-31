@@ -39,14 +39,14 @@
   z-10
   w-full
   max-h-9
-  text-xs
-  bg-gray-dark;
+  text-xs;
 }
 
 .footer-container:hover {
   @apply
-  bg-gray-dark
-  text-dark
+  bg-gray
+  text-light
+  bg-opacity-25
   shadow-lg
   transform
   transition
